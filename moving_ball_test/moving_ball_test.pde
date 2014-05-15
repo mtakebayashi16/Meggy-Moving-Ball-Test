@@ -34,38 +34,41 @@ int dotY = 4;
 int directions = 315;
 
 void loop(){
+  
+  
   checkDirections();
-  drawDot();
   checkBoundaries();
+  drawDot();
 
   DisplaySlate();
   delay(200);
   ClearSlate();
+
 }                    //end main loop
 
 
 void checkDirections(){
-  if (directions = 0)          
+  if (directions == 0)          
     dotX ++;
-  if (directions = 45){         
+  if (directions == 45){         
     dotX ++;
     dotY ++;
   }
-  if (directions = 90)
+  if (directions == 90)
     dotY ++;
-  if (directions = 135){
+  if (directions == 135){
     dotX --;
     dotY ++;
   }
-  if (directions = 180)
+  if (directions == 180)
     dotX --;
-  if (directions = 225){
+  if (directions == 225){
     dotX --;
     dotY --;
   }
-  if (directions = 270)
+  if (directions == 270)
     dotY --;
-  if (directions = 315){
+  if (directions == 315){
     dotX ++;
     dotY --;
   }
@@ -73,20 +76,49 @@ void checkDirections(){
 }
 
 void drawDot(){
- DrawPx(dotX, dotY, Green); 
+ DrawPx(dotX, dotY, Blue); 
 }
 
 void checkBoundaries(){
-  if (dotX == 0 && dotY == 0)   //if ball is in bottom left corner   
-    directions = 45;           //if ball hits a corner, make it go oout diagonally
-  if (dotX == 0 && dotY ==7)     //if ball is in the top left corner
-    directions = 315;
-  if (dotX == 7 && dotY == 0)    //if ball is in the bottom right corner
-    directions = 135;
-  if (dotX == 7 && dotY == 7)    //if ball is in the top right corner
-    directions = 225;
+  if (dotX == 0 && dotY == 0){   //if ball is in bottom left corner   
+    int j = random(1,3);        //random sequence to determine which way the ball bounces
+    if (j == 1)
+      directions = 45;       //if ball hits a corner, make it go oout diagonally
+    if (j == 2)
+      directions = 90;
+    dotX = 0;
+    dotY = 0;
+  }
+  if (dotX == 0 && dotY ==7){     //if ball is in the top left corner
+    int j = random(1,3);        //random sequence to determine which way the ball bounces
+    if (j == 1)
+      directions = 315;       //if ball hits a corner, make it go oout diagonally
+    if (j == 2)
+      directions = 270;
+    dotX = 0;
+    dotY = 7;
+  }
+  if (dotX == 7 && dotY == 0){    //if ball is in the bottom right corner
+    int j = random(1,3);        //random sequence to determine which way the ball bounces
+    if (j == 1)
+      directions = 90;       //if ball hits a corner, make it go oout diagonally
+    if (j == 2)
+      directions = 135;
+    dotX = 7;
+    dotY = 0;
+  }
+  if (dotX == 7 && dotY == 7){    //if ball is in the top right corner
+    int j = random(1,3);        //random sequence to determine which way the ball bounces
+    if (j == 1)
+      directions = 270;       //if ball hits a corner, make it go oout diagonally
+    if (j == 2)
+      directions = 225;
+    dotX = 7;
+    dotY = 7;
+  }
     
   if (dotX > 7){              //for when the ball hits the right side
+    dotX = 7;
     if (directions = 0)
       directions = 225;    //if the ball is going directly right, it will go left/down
     if (directions = 45)
@@ -95,6 +127,7 @@ void checkBoundaries(){
       directions = 225;     //if the ball is going right/down, it will go left/down
   }
   if (dotX <  0){             //for when the ball hits the left side
+    dotX = 0;
     if (directions = 225)
       directions = 315;    //if the ball is going left/down, it will go right/down
     if (directions = 135)
@@ -103,6 +136,7 @@ void checkBoundaries(){
       directions = 315;    //if the ball is going left, it will go right/down
   }
   if (dotY > 7){            //for when the ball hits the top of the screen
+    dotY = 7;
     if (directions = 45)
       directions = 315;    //if the ball is going right/up, it will go right/down
     if (directions = 90)
@@ -111,13 +145,14 @@ void checkBoundaries(){
       directions = 225;
   }
   if (dotY < 0){          //for when the ball hits the bottom of the screen
+    dotY = 0;
     if (directions = 225)
       directions = 135;        //if the ball is going left/down, it will go left/up
     if (directions = 270)
       directions = 45;          //if the ball is going straight down, it will go right/up
     if (directions = 315)
-      directions = 135;        //if the ball is going right/down, it will go left/up
-  }
+      directions = 45;        //if the ball is going right/down, it will go left/up
+   }
   
 } //end boundaries check
 
